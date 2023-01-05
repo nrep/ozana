@@ -5,4 +5,11 @@
             <livewire:stock-table />
         </div>
     </div>
+    <script>
+        function deleteStockItem(itemId) {
+            if (confirm("Are you sure you want to delete this stock item?") == true) {
+                @this.deleteStockItem(itemId);
+            }
+        }
+    </script>
 </div>

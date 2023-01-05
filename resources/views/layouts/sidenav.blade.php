@@ -160,13 +160,13 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('view sales and income report')
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('sales-and-income') }}">
-                                    <span class="sidebar-text">Sales & Income</span>
-                                </a>
-                            </li>
-                        @endcan
+                        {{-- @can('view sales and income report') --}}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('sales-and-income') }}">
+                                <span class="sidebar-text">Sales & Income</span>
+                            </a>
+                        </li>
+                        {{-- @endcan --}}
                         @can('view income vs expenses report')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('income-vs-expenses') }}">

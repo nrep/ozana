@@ -8,13 +8,13 @@ use Rappasoft\LaravelLivewireTables\Views\Columns\ButtonGroupColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
 use Rappasoft\LaravelLivewireTables\Views\Filters\DateFilter;
 use App\Models\Order;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\Views\Filters\NumberFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
 
 class OrderTable extends DataTableComponent
 {
-    protected $model = Order::class;
+    // protected $model = Order::class;
     public $user;
 
     public function configure(): void
@@ -51,7 +51,7 @@ class OrderTable extends DataTableComponent
             DateFilter::make('Date')
                 ->setFilterPillTitle('Date')
                 ->filter(function ($builder, $value) {
-                    $builder->whereDate('created_at', $value);
+                    $builder->whereDate('date', $value);
                 }),
         ];
     }
@@ -90,18 +90,39 @@ class OrderTable extends DataTableComponent
                                     'class' => 'btn btn-outline-primary',
                                 ];
                             }),
-                    ],
-                    [
-                        LinkColumn::make('Viewi') // make() has no effect in this case but needs to be set anyway
-                            ->title(fn ($row) => 'Viewi')
-                            ->location(fn ($row) => route('orders.bill', $row->id))
+                        /* LinkColumn::make('Update') // make() has no effect in this case but needs to be set anyway
+                            ->title(fn ($row) => 'Update')
+                            ->location(fn ($row) => route('orders.edit', $row->id))
                             ->attributes(function ($row) {
                                 return [
                                     'class' => 'btn btn-outline-primary',
                                 ];
                             }),
-                    ]
+                            */
+                        LinkColumn::make("Delete")
+                            ->title(fn ($row) => 'Delete')
+                            ->location(fn ($row) => "#")
+                            ->attributes(function ($row) {
+                                return [
+                                    'class' => 'btn btn-outline-danger',
+                                    'onclick' => 'deleteOrder(' . $row->id . ')'
+                                ];
+                            }), 
+                    ],
                 ),
         ];
+    }
+
+    public function builder(): Builder
+    {
+        if (auth()->user()->can('view purchases and expenses report')) {
+            $orders = Order::query();
+        } else {
+            $orders = Order::query()
+                ->where('date', date('Y-m-d'));
+        }
+        return $orders;
+            /* ->when($this->columnSearch['name'] ?? null, fn ($query, $name) => $query->where('users.name', 'like', '%' . $name . '%'))
+            ->when($this->columnSearch['email'] ?? null, fn ($query, $email) => $query->where('users.email', 'like', '%' . $email . '%')); */
     }
 }

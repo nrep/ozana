@@ -5,4 +5,11 @@
             <livewire:order-table />
         </div>
     </div>
+    <script>
+        function deleteOrder(orderId) {
+            if (confirm("Are you sure you want to delete this order?") == true) {
+                @this.deleteOrder(orderId);
+            }
+        }
+    </script>
 </div>

@@ -28,12 +28,15 @@ use App\Http\Livewire\UpgradeToPro;
 use App\Http\Livewire\Users;
 use App\Http\Livewire\Product\Form;
 use App\Http\Livewire\Product\Index as ProductIndex;
+use App\Http\Livewire\Product\Update;
 use App\Http\Livewire\Report\Expiry;
 use App\Http\Livewire\Report\IncomeVsExpenses;
 use App\Http\Livewire\Report\PurchasesAndExpenses;
 use App\Http\Livewire\Report\SalesAndIncome;
 use App\Http\Livewire\Report\StockValue;
 use App\Http\Livewire\Stock\Index as StockIndex;
+use App\Models\Stock;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,19 +83,19 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/products', ProductIndex::class)->name('products.index');
     Route::get('/products/create', Form::class)->name('products.create');
-    Route::get('/products/{id}/edit', Form::class)->name('products.edit');
+    Route::get('/products/{product}/edit', Update::class)->name('products.edit');
 
     Route::get('/stock', StockIndex::class)->name('stock.index');
     Route::get('/stock/create', \App\Http\Livewire\Stock\Form::class)->name('stock.create');
-    Route::get('/stock/{id}/edit', \App\Http\Livewire\Stock\Form::class)->name('stock.edit');
+    Route::get('/stock/{stockItem}/edit', \App\Http\Livewire\Stock\Update::class)->name('stock.edit');
 
     // Order routes
     Route::get('/orders', OrderIndex::class)->name('orders.index');
-    Route::get('/orders/create', \App\Http\Livewire\Order\Form::class)->name('orders.create');
-    Route::get('/orders/{id}/edit', \App\Http\Livewire\Order\Form::class)->name('orders.edit');
+    Route::get('/orders/create', \App\Http\Livewire\Order\Create\Form::class)->name('orders.create');
+    Route::get('/orders/{order}/edit', \App\Http\Livewire\Order\Update\Form::class)->name('orders.edit');
     Route::get('/orders/{order}/payments', \App\Http\Livewire\Order\Payment::class)->name('orders.payments');
     Route::get('/orders/{order}/payments/{payment}/edit', \App\Http\Livewire\Order\Payment::class)->name('orders.payments.edit');
-    Route::get('/orders/{order}/bill', \App\Http\Livewire\Order\Bill::class)->name('orders.bill');
+    Route::get('/orders/{order}', \App\Http\Livewire\Order\Bill::class)->name('orders.bill');
 
     Route::get('/purchases-and-expenses', PurchasesAndExpenses::class)->name('purchases-and-expenses');
     Route::get('/sales-and-income', SalesAndIncome::class)->name('sales-and-income');

@@ -50,4 +50,22 @@ class Order extends Model
     {
         return $this->payments->sum('paid_amount');
     }
+
+    // this is a recommended way to declare event handlers
+    public static function boot()
+    {
+        parent::boot();
+        self::deleting(function ($order) {
+            // do the rest of the cleanup...
+            $order->items()->each(function ($item) {
+                Stock::find($item->stock_id)->increment('available_quantity', $item->quantity);
+                Stock::find($item->stock_id)->decrement('sold_quantity', $item->quantity);
+                $item->delete();
+            });
+
+            $order->payments()->each(function ($payment) {
+                $payment->delete();
+            });
+        });
+    }
 }

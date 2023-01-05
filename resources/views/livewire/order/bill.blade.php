@@ -35,8 +35,8 @@
                                         <th scope="row">{{ $loop->iteration }}</th>
                                         <td>{{ $item->stock->product->name }}</td>
                                         <td>{{ $item->quantity }}</td>
-                                        <td>{{ $item->stock->selling_price }}</td>
-                                        <td>{{ $item->quantity * $item->stock->selling_price }}</td>
+                                        <td>{{ $item->selling_price }}</td>
+                                        <td>{{ $item->quantity * $item->selling_price }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

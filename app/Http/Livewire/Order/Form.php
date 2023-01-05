@@ -47,12 +47,6 @@ class Form extends Component
 
     public function save()
     {
-        $this->validate([
-            'name' => 'required',
-            'discount_id' => 'required',
-            'date' => 'required',
-        ]);
-
         $order = new Order;
 
         $order->customer_name = $this->name;
@@ -63,6 +57,8 @@ class Form extends Component
         $order->user_id = auth()->user()->id;
 
         $order->save();
+
+        dd($order);
 
         $this->emit('saved', $order->id);
 

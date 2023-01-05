@@ -14,6 +14,7 @@ class OrderItem extends Model
         'stock_id',
         'quantity',
         'user_id',
+        'sold_at'
     ];
 
     // Get the stock that the order item is for.
@@ -31,12 +32,12 @@ class OrderItem extends Model
     // Get the selling price of the stock that the order item is for.
     public function getSellingPriceAttribute()
     {
-        return $this->stock->selling_price;
+        return $this->sold_at;
     }
 
     // Calculate total price of the order item.
     public function getTotalPriceAttribute()
     {
-        return $this->stock->selling_price * $this->quantity;
+        return $this->sold_at * $this->quantity;
     }
 }

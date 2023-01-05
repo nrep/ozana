@@ -4,6 +4,7 @@ use App\Models\Product;
 use App\Models\Stock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Database\Eloquent\Builder;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,19 @@ Route::middleware('auth:api')->get('/products/create', function (Request $reques
     $product->save();
 });
 
-Route::get('/stocks', function () {
-    return Stock::where('available_quantity', '>', 0)->with('product')->get();
+Route::get('/stocks', function (Request $request) {
+    if ($request->has('term')) {
+        $stockItems = Stock::where('available_quantity', '>', 0)
+            ->with('product')
+            ->whereHas('product', function ($query) use ($request) {
+                $query->where('name', 'like', '%'.$request->term.'%');
+                // dd($query);
+            })
+            ->get();
+    } else {
+        $stockItems = Stock::where('available_quantity', '>', 0)
+            ->with('product')
+            ->get();
+    }
+    return $stockItems;
 });

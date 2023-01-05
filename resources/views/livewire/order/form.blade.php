@@ -24,7 +24,7 @@
                                 <div class="form-group">
                                     <label for="first_name">Names</label>
                                     <input wire:model="name" class="form-control" id="first_name" type="text"
-                                        placeholder="Enter the customer's names" required>
+                                        placeholder="Enter the customer's names">
                                 </div>
                                 @error('name')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -34,7 +34,7 @@
                                 <div class="form-group">
                                     <label for="first_name">Age</label>
                                     <input wire:model="age" class="form-control" type="number"
-                                        placeholder="Enter the customer's age" required>
+                                        placeholder="Enter the customer's age">
                                 </div>
                                 @error('age')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -55,7 +55,7 @@
                                 <div class="form-group">
                                     <label for="first_name">Phone Number</label>
                                     <input wire:model="phone_number" class="form-control" type="tel"
-                                        placeholder="Enter the customer's phone number" required>
+                                        placeholder="Enter the customer's phone number">
                                 </div>
                                 @error('phone_number')
                                     <div class="invalid-feedback">{{ $message }}</div>
